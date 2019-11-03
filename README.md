@@ -8,6 +8,9 @@ In this sample project demonstrates how we can create simple chat heads and allo
 
 Steps:
 Create chat head layout.
+
 Create service for chat heads and add the chat head layout to the display window.
+
 Override the OnTouch(), to respond the drag and move event.
+
 Add android.permission.SYSTEM_ALERT_WINDOW permission to the AndroidManifest.xml and check if the permission available in runtime before starting chat head service.
