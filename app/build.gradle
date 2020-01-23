@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
-def newFileName = "assemble-your-new-file-name"
+def gitBranch() {
+    def branch = ""
+    def proc = "git rev-parse --abbrev-ref HEAD".execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.err.eachLine { line -> println line }
+    proc.waitFor()
+    branch
+}
+
+
 
 android {
     compileSdkVersion 29
@@ -12,7 +21,7 @@ android {
             def outputDirPath = new File("${project.rootDir.absolutePath}/apks/${variant.flavorName}/${variant.buildType.name}")
             variant.packageApplicationProvider.get().outputDirectory = outputDirPath
 
-            def apkFileName = "${rootProject.name}_${android.defaultConfig.versionName}.apk"
+            def apkFileName = "${rootProject.name}_${gitBranch()}_${android.defaultConfig.versionName}.apk"
             output.outputFileName = apkFileName // directly assign the new name back to outputFileName
         }
     }
@@ -23,6 +32,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        resValue "string", "gitBranch", gitBranch()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
