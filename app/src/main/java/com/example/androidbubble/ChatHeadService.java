@@ -10,12 +10,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.nex3z.notificationbadge.NotificationBadge;
+
 public class ChatHeadService extends Service implements View.OnClickListener {
 
     private WindowManager windowManager;
     private View floatingView;
     private View collapsedView;
     private View expandedView;
+//    private NotificationBadge notificationBadge;
 
     public ChatHeadService() {
     }
@@ -32,6 +35,8 @@ public class ChatHeadService extends Service implements View.OnClickListener {
 
         //using layout inflator, inflate the chat head layout
         floatingView = LayoutInflater.from(this).inflate(R.layout.layout_chat_head, null);
+//        notificationBadge = (NotificationBadge) floatingView.findViewById(R.id.count);
+//        notificationBadge.setNumber(88);
 
         //setting the layout parameters
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(

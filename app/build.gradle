@@ -1,8 +1,22 @@
 apply plugin: 'com.android.application'
 
+def newFileName = "assemble-your-new-file-name"
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            // Redirect your apks to new defined location to outputDirPath
+            def outputDirPath = new File("${project.rootDir.absolutePath}/apks/${variant.flavorName}/${variant.buildType.name}")
+            variant.packageApplicationProvider.get().outputDirectory = outputDirPath
+
+            def apkFileName = "${rootProject.name}_${android.defaultConfig.versionName}.apk"
+            output.outputFileName = apkFileName // directly assign the new name back to outputFileName
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.androidbubble"
         minSdkVersion 23
@@ -27,6 +41,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.nex3z:notification-badge:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

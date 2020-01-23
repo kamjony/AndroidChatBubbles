@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
         } else {
             initializeView();
+
         }
     }
 
@@ -65,4 +67,15 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    @Override
+    protected void onUserLeaveHint()
+    {
+        // When user presses home page
+        Log.v("1", "Home Button Pressed");
+        super.onUserLeaveHint();
+        Intent intent = new Intent(MainActivity.this, ChatHeadService.class);
+        stopService(intent);
+    }
+
 }
